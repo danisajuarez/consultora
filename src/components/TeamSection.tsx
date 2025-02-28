@@ -1,5 +1,3 @@
-import React from "react";
-
 const teamMembers = [
   {
     name: "Guillermo Martínez",

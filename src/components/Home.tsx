@@ -7,6 +7,7 @@ import BeliefsSection from "./BeliefsSection";
 import TeamSection from "./TeamSection";
 import Footer from "./Footer";
 import ContactSection from "./ContactSection";
+import Clientes from "./Clientes";
 
 const Home = () => {
   const news = [
@@ -59,6 +60,7 @@ const Home = () => {
       <ObjectivesSection></ObjectivesSection>
       <BeliefsSection></BeliefsSection>
       <TeamSection></TeamSection>
+      <Clientes></Clientes>
       <ContactSection></ContactSection>
       <Footer></Footer>
     </>

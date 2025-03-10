@@ -260,7 +260,7 @@ const clientes: Cliente[] = [
   },
   {
     nombre: "YESI",
-    imagen: "/image47.png",
+    imagen: "/yesi.jpeg",
     sector: "Plástica",
     ubicacion: "Rosario",
   },

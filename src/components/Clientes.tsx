@@ -1,292 +1,103 @@
-type Cliente = {
+import React from "react";
+import Slider, { Settings } from "react-slick";
+import clientesData from "./clientes.json"; // Ajusta la ruta si es necesario
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// Importa íconos para las flechas
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
+
+// Interfaz del objeto cliente
+interface Cliente {
   nombre: string;
   imagen: string;
   sector: string;
   ubicacion: string;
+}
+
+// Función genérica para dividir un array en bloques de tamaño 'size'
+function chunkArray<T>(array: T[], size: number): T[][] {
+  const chunkedArr: T[][] = [];
+  for (let i = 0; i < array.length; i += size) {
+    chunkedArr.push(array.slice(i, i + size));
+  }
+  return chunkedArr;
+}
+
+// Flecha "Siguiente"
+const NextArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      className="absolute top-1/2 right-2 transform -translate-y-1/2 
+                 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600 
+                 z-10"
+      aria-label="Siguiente"
+    >
+      <HiOutlineChevronRight size={24} />
+    </button>
+  );
 };
 
-const clientes: Cliente[] = [
-  {
-    nombre: "ABELARDO CUFFIA",
-    imagen: "/image44.png",
-    sector: "Agrícola, Electrónica",
-    ubicacion: "Marcos Juárez",
-  },
-  {
-    nombre: "AGUADO",
-    imagen: "/image45.png",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "ALBA - AKZONOBEL",
-    imagen: "/alba.png",
-    sector: "Química",
-    ubicacion: "Garín",
-  },
-  {
-    nombre: "ASERES",
-    imagen: "/aseres.png",
-    sector: "Industria del mueble",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "AUSILI",
-    imagen: "/ausili.jpeg",
-    sector: "Plástica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "BELLA FARMA",
-    imagen: "/bellafarma.png",
-    sector: "Comercial",
-    ubicacion: "Crespo",
-  },
-  {
-    nombre: "CALABRO",
-    imagen: "/calabro.jpeg",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "ARE GASTRONOMÍA",
-    imagen: "/image47.png",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "DANDA",
-    imagen: "/danda.jpeg",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "DEGE",
-    imagen: "/dege.png",
-    sector: "Industria del mueble",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "DGR",
-    imagen: "/dgr.jpeg",
-    sector: "Administración pública",
-    ubicacion: "Salta",
-  },
-  {
-    nombre: "DIKA",
-    imagen: "/dika.png",
-    sector: "Arquitectura, Diseño",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "DPM PAPELERA PELLEGRINI",
-    imagen: "/dpm.png",
-    sector: "Industrial, Comercial",
-    ubicacion: "Carlos Pellegrini",
-  },
-  {
-    nombre: "EL PALACIO DE LA OPORTUNIDAD",
-    imagen: "/elpalaciodelaoportunidad.png",
-    sector: "Comercial",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "EUROGYM ALEM",
-    imagen: "/eurogym.jpeg",
-    sector: "Industria del fitness",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "EXPRESO RODRIGO",
-    imagen: "/expresorodrigo.png",
-    sector: "Transporte",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "FREUDENBERG",
-    imagen: "/freudenberg.png",
-    sector: "Textil",
-    ubicacion: "Buenos Aires",
-  },
-  {
-    nombre: "GHERBEZZA",
-    imagen: "/image29.jpeg",
-    sector: "Agrícola, Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "INCA - AKZONOBEL",
-    imagen: "/image30.png",
-    sector: "Química",
-    ubicacion: "Montovideo, Uruguay",
-  },
-  {
-    nombre: "INDUSTRIAS MENGARELLI",
-    imagen: "/image31.png",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "INVENTU",
-    imagen: "/image32.png",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "LAUGE",
-    imagen: "/image33.png",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "LEMA AMOBLAMIENTOS",
-    imagen: "/image34.jpeg",
-    sector: "Industria del mueble",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "LÍPARI",
-    imagen: "/image35.png",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "MASA",
-    imagen: "/image43.jpeg",
-    sector: "Servicios de Salud",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "MONDINO",
-    imagen: "/mondino.jpeg",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "MORELLI",
-    imagen: "/morelli.jpeg",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "MUNICIPALIDAD DE ROSARIO",
-    imagen: "/municipalidadderosario.png",
-    sector: "Administración pública",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "NADOZA",
-    imagen: "/image42.jpeg",
-    sector: "Industria del Software",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "NGR",
-    imagen: "/ngr.png",
-    sector: "Industrial, Comercial",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "PEPSICO",
-    imagen: "/pepsico.png",
-    sector: "Alimenticia",
-    ubicacion: "Colonia, Uruguay",
-  },
-  {
-    nombre: "PERFECT CIRCLE",
-    imagen: "/dana.gif",
-    sector: "Autopartista",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "PEROSINO",
-    imagen: "/image41.png",
-    sector: "Galvanoplastía",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "PUERTO PARAISO",
-    imagen: "/image40.jpeg",
-    sector: "Club",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "R ORION SRL -  DISTRIMAQ",
-    imagen: "image39.png",
-    sector: "Maquina agricola",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "RENOVA - AKZONOBEL",
-    imagen: "/renova.png",
-    sector: "Química",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "SEAQUIST ENGELMAN",
-    imagen: "/image38.gif",
-    sector: "Plástica",
-    ubicacion: "Tortuguitas",
-  },
-  {
-    nombre: "SECTUR",
-    imagen: "/salta.jpeg",
-    sector: "Administración pública",
-    ubicacion: "Salta",
-  },
-  {
-    nombre: "SENSOR",
-    imagen: "/sensor.jpeg",
-    sector: "Agrícola, Electrónica",
-    ubicacion: "Totoras",
-  },
-  {
-    nombre: "SER-PAQ",
-    imagen: "/serpaq.jpeg",
-    sector: "Transporte",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "SOL REAL",
-    imagen: "/solreal.png",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "TECNIPISOS",
-    imagen: "/tps.png",
-    sector: "Construcción",
-    ubicacion: "Ramos Mejía",
-  },
-  {
-    nombre: "YESI",
-    imagen: "/yesi.jpeg",
-    sector: "Plástica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "CENTRO DE DIAGNOSTICO",
-    imagen: "/centrodediagnostico.jpeg",
-    sector: "Servicios de Salud",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "ROICA",
-    imagen: "/image36.png",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-  {
-    nombre: "NEOVAC",
-    imagen: "/image37.jpeg",
-    sector: "Metalmecánica",
-    ubicacion: "Rosario",
-  },
-];
-
-export default function ClientesGrid() {
+// Flecha "Anterior"
+const PrevArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
   return (
-    <section className="py-16 px-6 max-w-6xl mx-auto text-center">
+    <button
+      onClick={onClick}
+      className="absolute top-1/2 left-2 transform -translate-y-1/2 
+                 bg-gray-600 text-white rounded-full p-2 hover:bg-gray-600 
+                 z-10"
+      aria-label="Anterior"
+    >
+      <HiOutlineChevronLeft size={24} />
+    </button>
+  );
+};
+
+const TresCarruseles: React.FC = () => {
+  // Obtenemos la lista de clientes desde el JSON
+  const clientes: Cliente[] = clientesData as Cliente[];
+
+  // Dividimos el array en 3 partes
+  const chunkSize = Math.ceil(clientes.length / 3);
+  const chunkedClients = chunkArray(clientes, chunkSize);
+
+  // Configuración del carrusel
+  const settings: Settings = {
+    dots: false, // Sin puntitos de navegación
+    arrows: true, // Con flechas
+    nextArrow: <NextArrow />, // Flecha personalizada de "siguiente"
+    prevArrow: <PrevArrow />, // Flecha personalizada de "anterior"
+    autoplay: true, // Se desplaza automáticamente
+    autoplaySpeed: 2000, // Intervalo de 2s para el auto-scroll
+    infinite: true, // Carrusel infinito
+    speed: 500, // Velocidad de la animación
+    slidesToShow: 4, // Número de tarjetas visibles en pantallas grandes
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
+  return (
+    <div className="py-16 px-6 max-w-6xl mx-auto text-center relative">
       <h2 className="text-3xl font-bold text-gray-900 mb-8">
         Nuestros Clientes
       </h2>
@@ -295,25 +106,36 @@ export default function ClientesGrid() {
         gustaría ser la próxima?
       </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        {clientes.map((cliente, index) => (
-          <div
-            key={index}
-            className="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300"
-          >
-            <img
-              src={cliente.imagen}
-              alt={cliente.nombre}
-              className="w-full h-24 object-contain mb-3"
-            />
-            <h3 className="text-lg font-semibold text-gray-900">
-              {cliente.nombre}
-            </h3>
-            <p className="text-sm text-gray-600">{cliente.sector}</p>
-            <p className="text-xs text-gray-500">{cliente.ubicacion}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+      {/* Renderizamos 3 carruseles independientes */}
+      {chunkedClients.map((grupo, index) => (
+        <div key={index} className="mb-16 relative">
+          {/* Puedes agregar un subtítulo o eliminarlo */}
+          <Slider {...settings}>
+            {grupo.map((cliente, idx) => (
+              <div key={idx} className="p-4">
+                <div
+                  className="bg-white p-4 rounded-lg shadow-md border border-gray-200 
+                                flex flex-col items-center text-center 
+                                hover:shadow-lg transition-shadow duration-300"
+                >
+                  <img
+                    src={cliente.imagen}
+                    alt={cliente.nombre}
+                    className="w-full h-24 object-contain mb-3"
+                  />
+                  <h4 className="text-[13px] font-semibold text-gray-900">
+                    {cliente.nombre}
+                  </h4>
+                  <p className="text-sm text-gray-600">{cliente.sector}</p>
+                  <p className="text-xs text-gray-500">{cliente.ubicacion}</p>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </div>
+      ))}
+    </div>
   );
-}
+};
+
+export default TresCarruseles;
